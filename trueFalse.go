@@ -8,22 +8,39 @@ import (
 	"strconv"
 )
 
-// func compare(value int) string {
-func compare(value string) string {
+var secretValue int
+
+func genRandomNoAndCompare(value string) {
 	//do not change this variable resultMessage, secretValue
-	resultMessge := ""
-	secretValue := 88
+	res := ""
 	//Insert your code from here
 	count := 0
 	randNo := randomNumber()
-	for strconv.Itoa(randNo) != strconv.Itoa(secretValue) && count < 10000 {
-		count = count + 1
-		randNo = randomNumber()
+	for count < 1000 { // for strconv.Itoa(randNo) != strconv.Itoa(secretValue) && count << 1000
+		res = compare(randNo) //
+		if res != "Well Done! Your guess is correct" {
+			count = count + 1
+			randNo = randomNumber()
+		} else {
+			break
+		}
 	}
 
 	fmt.Println("The secretNo is " + strconv.Itoa(randNo) + " found aft: " + strconv.Itoa(count) + " random rounds.")
-	//do not remove this line
-	return resultMessge
+}
+
+func compare(value int) string {
+	resultMessage := ""
+	if strconv.Itoa(value) < strconv.Itoa(secretValue) {
+		resultMessage = "Too low, try again next time!"
+	}
+	if strconv.Itoa(value) > strconv.Itoa(secretValue) {
+		resultMessage = "Too high"
+	}
+	if strconv.Itoa(value) == strconv.Itoa(secretValue) {
+		resultMessage = "Well Done! Your guess is correct"
+	}
+	return resultMessage
 }
 
 // this creates a fixed array
@@ -47,10 +64,11 @@ func randomNumber() int {
 }
 
 func main() {
+	secretValue = 88
 	// var guess int
-	var guess string
+	var ghostVal string
 	// fmt.Println("Enter an integer value: ")
 	fmt.Println("Test your luck and hack a out a secret# - hit any key to continue")
-	fmt.Scanln(&guess)
-	compare(guess)
+	fmt.Scanln(&ghostVal)
+	genRandomNoAndCompare(ghostVal)
 }
